@@ -6,6 +6,9 @@
 	import * as Cesium from 'cesium'
 	import { getLayerNamesFromFeatures, vworldKey } from '$lib/utils'
 	import Topbar from '$lib/components/Topbar.svelte'
+	import { PUBLIC_VWORLD_API } from '$env/static/public';
+
+	const src = 'https://map.vworld.kr/js/webglMapInit.js.do?version=3.0&apiKey=' + vworldKey
 
 	/**
 	 * @param {Object} bbox
@@ -41,7 +44,9 @@
 			domain: 'localhost'
 		})
 
-		const response = await fetch(`/vworld-api/req/wfs?${params.toString()}`)
+	
+
+		const response = await fetch(`${PUBLIC_VWORLD_API}/req/wfs?${params.toString()}`)
 		if (!response.ok) {
 			throw new Error('WFS 요청 실패')
 		}
@@ -93,14 +98,14 @@
 			version: '2.0',
 			crs: 'epsg:3857',
 			point: `${bbox.xmin},${bbox.ymin}`,
-			format: 'json',
+			format: 'application/json',
 			type: 'both',
 			zipcode: 'false',
 			simple: 'true',
 			key: vworldKey
 		})
 
-		const response = await fetch(`/vworld-api/req/address?${params.toString()}`)
+		const response = await fetch(`${PUBLIC_VWORLD_API}/req/address?${params.toString()}`)
 		if (!response.ok) {
 			throw new Error('주소 요청 실패')
 		}
@@ -183,7 +188,7 @@
 <svelte:head>
 	<script
 		type="text/javascript"
-		src="https://map.vworld.kr/js/webglMapInit.js.do?version=3.0&apiKey=8BE69D8B-617F-3EB2-8398-E3EC4D69A881"
+		src={src}
 	></script>
 </svelte:head>
 <!-- <Topbar /> -->

@@ -1,3 +1,4 @@
+import { PUBLIC_VWORLD_API_KEY } from '$env/static/public'
 export const layers = [
 	{ layerid: 'LT_C_AISALTC', layername: '경계구역' },
 	{ layerid: 'LT_C_AISCTRC', layername: '관제권' },
@@ -11,7 +12,7 @@ export const layers = [
 	{ layerid: 'LT_C_WGISNPGUG', layername: '국립자연공원' }
 ]
 
-export const vworldKey = '8BE69D8B-617F-3EB2-8398-E3EC4D69A881'
+export const vworldKey = PUBLIC_VWORLD_API_KEY || '8BE69D8B-617F-3EB2-8398-E3EC4D69A881'
 
 /**
  * Get the layer names from the features

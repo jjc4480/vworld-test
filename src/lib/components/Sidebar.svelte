@@ -83,7 +83,6 @@
 	 * @param {string} layerid
 	 */
 	function toggleVisibleLayer(layerid) {
-		console.log($mapStore)
 		const el = $mapStore?.getElementById(layerid)
 		if (!el) {
 			addLayer(layerid)
