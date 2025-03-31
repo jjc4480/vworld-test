@@ -8,6 +8,11 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	interface Window {
+		vw: any
+		map: any
+	}
 }
 
-export {};
+export {}
