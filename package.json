@@ -31,7 +31,6 @@
 	},
 	"dependencies": {
 		"cesium": "^1.127.0",
-		"firebase": "^11.5.0",
 		"proj4": "^2.15.0"
 	}
 }
