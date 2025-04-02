@@ -107,7 +107,7 @@
 			<h5 class="!my-2 text-lg font-bold">기능</h5>
 			{#each defaultMenus as menu}
 				<button
-					class="cursor-pointer rounded-2xl  bg-[#f9f9f9] !p-2 shadow hover:bg-[#b9b9b9]"
+					class="cursor-pointer rounded-2xl bg-[#f9f9f9] !p-2 shadow hover:bg-[#b9b9b9]"
 					on:click={menu.action}>{menu.name}</button
 				>
 			{/each}
@@ -118,7 +118,7 @@
 			{#each layerMenu as menu}
 				<li class="flex">
 					<button
-						class="cursor-pointer rounded-2xl  bg-[#f9f9f9] !p-2 shadow hover:bg-[#b9b9b9]"
+						class="cursor-pointer rounded-2xl bg-[#f9f9f9] !p-2 shadow hover:bg-[#b9b9b9]"
 						on:click={menu.action}>{menu.name}</button
 					>
 				</li>
