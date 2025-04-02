@@ -20,7 +20,7 @@ export async function POST({ request }) {
 		'LT_C_WGISNPGUG'
 	]
 	const bbox = data.bbox
-	const { xmin, ymin, xmax, ymax } = bbox
+	// const { xmin, ymin, xmax, ymax } = bbox
 
 	if (!xmin || !ymin || !xmax || !ymax) {
 		return new Response(JSON.stringify({ error: 'bbox 누락됨' }), { status: 400 })
