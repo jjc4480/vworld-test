@@ -80,6 +80,20 @@
 	}
 
 	/**
+	 * @param {number} lon
+	 * @param {number} lat
+	 * @returns {Promise<void>}
+	 */
+	async function getDroneOneStopInfo(lon, lat) {
+		const res = await fetch(`/api/droneOneStopInfo?lon=${lon}&lat=${lat}`)
+		if (!res.ok) {
+			throw new Error('드론 원스톱 정보 요청 실패')
+		}
+		const data = await res.json()
+		return data
+	}
+
+	/**
 	 * @returns {Promise<void>}
 	 */
 	async function initMap() {
@@ -124,6 +138,9 @@
 
 				const delta = 0.0001
 
+				console.log('lon: ', lon)
+				console.log('lat: ', lat)
+
 				const [minX, minY] = proj4('EPSG:4326', 'EPSG:3857', [lon - delta, lat - delta])
 				const [maxX, maxY] = proj4('EPSG:4326', 'EPSG:3857', [lon + delta, lat + delta])
 
@@ -137,6 +154,10 @@
 				const addressString = await getAddressFromBbox(bbox)
 
 				const { features } = await checkFlightLayer(bbox)
+
+				const droneOneStopInfo = await getDroneOneStopInfo(lon, lat)
+
+				console.log('드론 원스톱 정보: ', droneOneStopInfo)
 
 				console.log('address: ', addressString)
 				console.log('features : ', features)
