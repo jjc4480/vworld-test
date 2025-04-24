@@ -29,8 +29,6 @@ export async function GET({ url }) {
 
 	const externalUrl = `https://api.vworld.kr/req/address?${query.toString()}`
 
-	
-
 	try {
 		const res = await fetch(externalUrl)
 		const data = await res.json()

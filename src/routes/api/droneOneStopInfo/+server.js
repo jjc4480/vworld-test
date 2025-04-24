@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { env } from '$env/dynamic/private'
 
-
 /**
  * Axios 클라이언트를 생성합니다. 세션 쿠키가 없으면 로그인 후 클라이언트를 반환합니다.
  * @returns {Promise<import('axios').AxiosInstance>} Axios 클라이언트
@@ -11,11 +10,12 @@ async function createAxiosClient() {
 		baseURL: 'https://drone.onestop.go.kr',
 		withCredentials: true,
 		headers: {
-			'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+			accept:
+				'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
 			'accept-language': 'ko,en;q=0.9,en-US;q=0.8',
 			'cache-control': 'no-cache',
 			'content-type': 'application/x-www-form-urlencoded',
-			'pragma': 'no-cache',
+			pragma: 'no-cache',
 			'sec-ch-ua': '"Microsoft Edge";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
 			'sec-ch-ua-mobile': '?0',
 			'sec-ch-ua-platform': '"Windows"',
@@ -24,7 +24,7 @@ async function createAxiosClient() {
 			'sec-fetch-site': 'same-origin',
 			'sec-fetch-user': '?1',
 			'upgrade-insecure-requests': '1',
-			'referer': 'https://drone.onestop.go.kr',
+			referer: 'https://drone.onestop.go.kr',
 			'referrer-policy': 'strict-origin-when-cross-origin'
 		}
 	})
@@ -71,7 +71,7 @@ async function createAxiosClient() {
  */
 async function getEmdCode(lon, lat) {
 	// https://api.vworld.kr/req/data?service=data&version=2.0&request=GetFeature&key=&format=xml&errorformat=xml&size=10&page=1&data=LT_C_UQ111&geomfilter=POINT(127.01432909520526 37.57305887997927)&attrfilter=uname:like:준주거지역&columns=uname,dnum,dyear,sido_name,sigg_name,ag_geom&geometry=true&attribute=true&crs=EPSG:4326&domain=
-	const vworldKey = env.VWORLD_KEY || '8BE69D8B-617F-3EB2-8398-E3EC4D69A881';
+	const vworldKey = env.VWORLD_KEY || '8BE69D8B-617F-3EB2-8398-E3EC4D69A881'
 
 	const query = new URLSearchParams({
 		service: 'data',
@@ -116,15 +116,18 @@ export async function GET({ url }) {
 		// Promise.all로 병렬 요청 처리
 		const dataArray = await Promise.all(
 			typeArray.map(async (type) => {
-				const response = await client.get(`/civilaffairs/affairs/getAffairsUser?PAGE_TYPE=user&APPLY_TYPE=${type}&ADDR_ID=${emdCode}`, {
-					headers: {
-						'accept': 'application/json, text/javascript, */*; q=0.01',
-						'content-type': 'application/json; charset=UTF-8',
-						'x-requested-with': 'XMLHttpRequest',
-						'referer': 'https://drone.onestop.go.kr/common/flightArea',
-						'referrer-policy': 'strict-origin-when-cross-origin'
+				const response = await client.get(
+					`/civilaffairs/affairs/getAffairsUser?PAGE_TYPE=user&APPLY_TYPE=${type}&ADDR_ID=${emdCode}`,
+					{
+						headers: {
+							accept: 'application/json, text/javascript, */*; q=0.01',
+							'content-type': 'application/json; charset=UTF-8',
+							'x-requested-with': 'XMLHttpRequest',
+							referer: 'https://drone.onestop.go.kr/common/flightArea',
+							'referrer-policy': 'strict-origin-when-cross-origin'
+						}
 					}
-				})
+				)
 				return response.data
 			})
 		)
