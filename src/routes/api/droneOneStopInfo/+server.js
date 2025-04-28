@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { env } from '$env/dynamic/private'
+import mysql from 'mysql2/promise'
 
 /**
  * Axios 클라이언트를 생성합니다. 세션 쿠키가 없으면 로그인 후 클라이언트를 반환합니다.
@@ -59,6 +60,43 @@ async function createAxiosClient() {
 	return client
 }
 
+
+// db connection pool 생성
+const pool = mysql.createPool({
+	host: env.DB_HOST,
+	user: env.DB_USER,
+	password: env.DB_PASSWORD,
+	database: env.DB_NAME,
+	waitForConnections: true,
+	connectionLimit: 10,
+	queueLimit: 0
+})
+
+/**
+ *  db coneection 을 통해서, 값을 가져온다.
+ * @param {string} emdcode - EMD 코드
+ * @returns {Promise<any>} DB에서 가져온 데이터
+ */
+async function getAreaManagerByEmdCode(emdcode) {
+	const connection = await pool.getConnection()
+	try {
+		const [rows] = await connection.query(`
+			SELECT * 
+			FROM AreaManager am 
+			LEFT JOIN AdministrativeAreaManager aam 
+			ON aam.areaManagerId = am.id
+			WHERE aam.administrativeAreaEmdCode = ? 
+			`, [emdcode])
+			
+		return rows
+	} catch (error) {
+		console.error('DB 쿼리 실패:', error)
+		throw error
+	} finally {
+		connection.release()
+	}
+}
+
 /**
  * 주어진 좌표에 대한 EMD 코드를 가져옵니다.
  * @async
@@ -111,31 +149,12 @@ export async function GET({ url }) {
 		// 추가 헤더 설정
 		const emdCode = await getEmdCode(lon, lat)
 
-		const typeArray = [3, 4, 5]
-
-		// Promise.all로 병렬 요청 처리
-		const dataArray = await Promise.all(
-			typeArray.map(async (type) => {
-				const response = await client.get(
-					`/civilaffairs/affairs/getAffairsUser?PAGE_TYPE=user&APPLY_TYPE=${type}&ADDR_ID=${emdCode}`,
-					{
-						headers: {
-							accept: 'application/json, text/javascript, */*; q=0.01',
-							'content-type': 'application/json; charset=UTF-8',
-							'x-requested-with': 'XMLHttpRequest',
-							referer: 'https://drone.onestop.go.kr/common/flightArea',
-							'referrer-policy': 'strict-origin-when-cross-origin'
-						}
-					}
-				)
-				return response.data
-			})
-		)
+		const rows = await getAreaManagerByEmdCode(emdCode)
 
 		// 응답 데이터에서 필요한 정보를 추출합니다.
 		// 필요한 데이터 가공 및 처리
 
-		return new Response(JSON.stringify(dataArray), {
+		return new Response(JSON.stringify(rows), {
 			headers: {
 				'Content-Type': 'application/json'
 			}
