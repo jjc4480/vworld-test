@@ -3,7 +3,7 @@
 import { env } from '$env/dynamic/private'
 
 /**
- *
+ * bbox를 통해 주소를 가져옴
  * @param {import('@sveltejs/kit').RequestEvent} event
  * @returns {Promise<Response>}
  */

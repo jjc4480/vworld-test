@@ -8,7 +8,6 @@ import { env } from '$env/dynamic/private'
 export async function POST({ request }) {
 	const data = await request.json()
 	const layerids = [
-		'LT_C_AISALTC',
 		'LT_C_AISCTRC',
 		'LT_C_AISPRHC',
 		'LT_C_AISATZC',
@@ -17,7 +16,10 @@ export async function POST({ request }) {
 		'LT_C_AISFLDC',
 		'LT_C_AISDNGC',
 		'LT_C_UO301',
-		'LT_C_WGISNPGUG'
+		'LT_C_WGISNPGUG',
+		'LT_C_AISTEMP',
+		'LT_C_AISOBLS',
+		'LT_C_AISPCA',
 	]
 	const bbox = data.bbox
 	const { xmin, ymin, xmax, ymax } = bbox

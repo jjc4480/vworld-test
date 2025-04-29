@@ -62,6 +62,7 @@
 	}
 
 	/**
+	 * 
 	 * @param {Object} bbox
 	 * @param {number} bbox.xmin
 	 * @param {number} bbox.ymin
@@ -158,7 +159,6 @@
 				const droneOneStopInfo = await getDroneOneStopInfo(lon, lat)
 
 				console.log('드론 원스톱 정보: ', droneOneStopInfo)
-
 				console.log('address: ', addressString)
 				console.log('features : ', features)
 				console.log('layerNames : ', getLayerNamesFromFeatures(features))

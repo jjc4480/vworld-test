@@ -30,13 +30,12 @@ export const layers = [
 	{ layerid: 'LT_C_AISTEMP', layername: '임시비행금지구역' }, // 의미가 있는지 모르겠음
 	{ layerid: 'LT_C_AISOBLS', layername: '장애물공역' },
 	{ layerid: 'LT_C_AISPCA', layername: '사전협의구역' }
-	// lt_c_aispca
 ]
 
 export const vworldKey = PUBLIC_VWORLD_API_KEY || '8BE69D8B-617F-3EB2-8398-E3EC4D69A881'
 
 /**
- * Get the layer names from the features
+ * fetures를 통해 받아온 레이어의 id를 통해 레이어 이름을 가져옴
  * @param {Array<{id: string}>} features
  * @returns {Array<String>} layer names
  */
@@ -44,7 +43,6 @@ export const getLayerNamesFromFeatures = (features) => {
 	const uniqueLayerIds = [
 		...new Set(features.map((/** @type {{ id: string; }} */ f) => f.id.split('.')[0].toLowerCase()))
 	]
-	// features 에 배열이 들어있고, 배열의 요소 안에는 id가 있음.
 
 	return layers
 		.filter((layer) => uniqueLayerIds.includes(layer.layerid.toLowerCase()))
