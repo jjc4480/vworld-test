@@ -19,7 +19,7 @@ export async function POST({ request }) {
 		'LT_C_WGISNPGUG',
 		'LT_C_AISTEMP',
 		'LT_C_AISOBLS',
-		'LT_C_AISPCA',
+		'LT_C_AISPCA'
 	]
 	const bbox = data.bbox
 	const { xmin, ymin, xmax, ymax } = bbox

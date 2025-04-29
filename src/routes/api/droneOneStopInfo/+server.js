@@ -21,14 +21,17 @@ const pool = mysql.createPool({
 async function getAreaManagerByEmdCode(emdcode) {
 	const connection = await pool.getConnection()
 	try {
-		const [rows] = await connection.query(`
+		const [rows] = await connection.query(
+			`
 			SELECT * 
 			FROM AreaManager am 
 			LEFT JOIN AdministrativeAreaManager aam 
 			ON aam.areaManagerId = am.id
 			WHERE aam.administrativeAreaEmdCode = ? 
-			`, [emdcode])
-			
+			`,
+			[emdcode]
+		)
+
 		return rows
 	} catch (error) {
 		console.error('DB 쿼리 실패:', error)
@@ -49,7 +52,6 @@ async function getAreaManagerByEmdCode(emdcode) {
  * API 호출에 실패하면 오류를 발생시킵니다.
  */
 async function getEmdCode(lon, lat) {
-
 	const vworldKey = env.VWORLD_KEY || '8BE69D8B-617F-3EB2-8398-E3EC4D69A881'
 
 	const query = new URLSearchParams({

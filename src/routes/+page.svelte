@@ -62,7 +62,7 @@
 	}
 
 	/**
-	 * 
+	 *
 	 * @param {Object} bbox
 	 * @param {number} bbox.xmin
 	 * @param {number} bbox.ymin
